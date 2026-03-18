@@ -22,6 +22,7 @@ from .webhooks import router as webhooks_router
 from .dependencies import get_current_user
 from .preferences import router as preferences_router
 from .karma import router as karma_router
+from .chat import router as chat_router
 
 
 @asynccontextmanager
@@ -62,6 +63,9 @@ app.include_router(preferences_router)
 
 # Karma points system router
 app.include_router(karma_router)
+
+# Chat system router
+app.include_router(chat_router)
 
 # Mount static files for demo
 static_dir = os.path.join(os.path.dirname(__file__), "static")

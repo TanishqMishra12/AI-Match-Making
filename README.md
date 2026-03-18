@@ -97,6 +97,21 @@ CREATE TABLE karma_ledger (
 
 ---
 
+## Chat System
+
+Karma-gated direct messaging with real-time delivery via Redis Pub/Sub. All endpoints require Clerk JWT authentication.
+
+### Chat API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/api/v1/chat/send` | Send a DM (karma outbound rule + inbox shield enforced) |
+| `GET` | `/api/v1/chat/conversations/{user_id}` | List conversations with latest message and unread count |
+| `GET` | `/api/v1/chat/{user_id}/{other_user_id}` | Paginated conversation history between two users |
+| `PATCH` | `/api/v1/chat/{message_id}/read` | Mark a message as read (receiver only) |
+
+---
+
 ## Quick Start
 
 ### 1. Installation
@@ -272,6 +287,8 @@ matching_system/
 ├── karma.py                  # Karma points API routes
 ├── karma_models.py           # Karma enums, tier logic, Pydantic schemas
 ├── karma_migration.sql       # Karma ledger table + trigger migration
+├── chat.py                   # Chat API routes (DM, conversations, read receipts)
+├── chat_migration.sql        # Messages table migration
 ├── websocket_server.py       # WebSocket + Redis Pub/Sub
 ├── celery_tasks.py           # process_match_task (main logic)
 ├── models.py                 # Matching system Pydantic schemas
@@ -304,6 +321,7 @@ Migrations must be run in order. Each is idempotent and wrapped in a transaction
 | 2 | `clerk_migration.sql` | Add Clerk auth columns (email, first_name, last_name, etc.) to users |
 | 3 | `user_preferences_migration.sql` | user_preferences table with ENUM types for onboarding |
 | 4 | `karma_migration.sql` | karma_ledger table, action ENUM, trigger for denormalized score, inbox shield |
+| 5 | `chat_migration.sql` | messages table with conversation indexes and unread tracking |
 
 ## Troubleshooting
 
