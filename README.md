@@ -1,4 +1,4 @@
-# AI-Powered Community Matching System v2.0
+# AI-Powered Community Matching System 
 
 Intelligent onboarding solution with **<2 second** community matching using hybrid algorithms, a **reputation-based karma system**, **real-time WebSocket** delivery, and a full **social networking layer** (connections, discovery, events, chat).
 
